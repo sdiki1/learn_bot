@@ -5,20 +5,21 @@ from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.fsm_storage.redis import RedisStorage2
 
-from learn_bot.tg_bot.config import load_config
-
+from tg_bot.config import load_config
+from tg_bot.filters.admin import AdminFilter
+from tg_bot.handlers.echo import register_echo
+from tg_bot.middlewares.db import DbMiddleware
 
 logger = logging.getLogger(__name__)
 
 def register_all_middlewares(dp):
-    dp.setup_middleware(...)
+    dp.setup_middleware(DbMiddleware)
 
 def register_all_filters(dp):
-    dp.filters_factory.bind(...)
+    dp.filters_factory.bind(AdminFilter)
 
-def register_all_handlers():
-    #register_admin(dp)
-    pass
+def register_all_handlers(dp):
+    register_echo(dp)
 
 
 async def main():
@@ -44,9 +45,12 @@ async def main():
         await dp.storage.wait_closed()
         await bot.session.close()
 
+
+
 if __name__ == '__name__':
 
     try:
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
-        logger.error("Bot stopped")
+        logger.error("Bot stopped!")
+
