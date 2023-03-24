@@ -1,6 +1,6 @@
 import asyncio
-
 import logging
+
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.fsm_storage.redis import RedisStorage2
@@ -27,14 +27,14 @@ async def main():
         level=logging.INFO,
         format=u'%(filename)s:%(lineno)d #% (Levelname)-8s [% (asctime)s] - %(name)s - % (message)s'
     )
-    config = load_config(".env")
+    config = load_config(".env.dist")
 
     bot = Bot(token=config.tg_bot.token, parse_mode="HTML")
     storage = RedisStorage2() if config.tg_bot.use_redis else MemoryStorage()
     dp = Dispatcher(bot)
     bot['config'] = config
 
-    register_all_middlewares(dp)
+    #register_all_middlewares(dp)
     register_all_filters(dp)
     register_all_handlers(dp)
 
@@ -47,8 +47,7 @@ async def main():
 
 
 
-if __name__ == '__name__':
-
+if __name__ == '__main__':
     try:
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):

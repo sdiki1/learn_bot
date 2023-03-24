@@ -21,7 +21,7 @@ class Miscellaneous:
 
 @dataclass
 class Config:
-    tg_vot: TgBot
+    tg_bot: TgBot
     db: DbConfig
     misc: Miscellaneous
 
@@ -32,7 +32,7 @@ def load_config(path: str = None):
 
     return Config(
 
-        tg_bot = TgBot(
+        tg_bot=TgBot(
             token=env.str("BOT_TOKEN"),
             admin_ids=list(map(int, env.list("ADMINS"))),
             use_redis=env.bool("USE_REDIS")
