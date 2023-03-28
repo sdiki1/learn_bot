@@ -18,3 +18,16 @@ start = ReplyKeyboardMarkup(
     resize_keyboard=True
 
 )
+
+
+only_back = ReplyKeyboardMarkup(
+
+    keyboard=[
+        [
+            KeyboardButton(text='назад')
+        ]
+    ],
+
+    resize_keyboard=True
+)
+
