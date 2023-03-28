@@ -31,3 +31,12 @@ only_back = ReplyKeyboardMarkup(
     resize_keyboard=True
 )
 
+start_now = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text="🔝начать сейчас🔝")
+        ]
+    ],
+
+    resize_keyboard=True
+)
