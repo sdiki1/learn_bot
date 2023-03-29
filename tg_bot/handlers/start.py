@@ -14,19 +14,23 @@ async def start_hand(message: types.Message):
 
 def register_start(dp: Dispatcher):
     dp.register_message_handler(start_hand, commands='start')
-
-
+    dp.register_message_handler(start_hand, state=Start.Start_learning, text='назад')
+    dp.register_message_handler(start_hand, state=Start.About_bot, text='назад')
+    dp.register_message_handler(start_hand, state=Start.Profile, text='назад')
 
 
 async def profile(message: types.Message):
     await Start.Profile.set()
     await message.answer(f'ID юзера: {message.from_user.id},\nID чата: {message.chat.id},\nВремя сейчас: {datetime.datetime.now()}', reply_markup=only_back)
 
-def register_profile(dp:Dispatcher):
-    dp.register_message_handler(profile, state=Start.Start_command, text='профиль')
+#def register_profile(dp:Dispatcher):
+
 
 def register_profile_back(dp: Dispatcher):
-    dp.register_message_handler(start_hand, state=Start.Profile, text='назад')
+
+    dp.register_message_handler(profile, state=Start.Start_command, text='профиль')
+
+
 
 
 async def about_bot(message: types.Message):
@@ -35,11 +39,4 @@ async def about_bot(message: types.Message):
 
 def register_about_bot(dp:Dispatcher):
     dp.register_message_handler(about_bot, state=Start.Start_command, text='О боте')
-
-def register_about_bot_back(dp: Dispatcher):
-    dp.register_message_handler(start_hand, state=Start.About_bot, text='назад')
-
-
-
-
 
