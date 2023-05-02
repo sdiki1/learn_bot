@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="Untitled.db" uuid="506b0c6e-bc1b-4368-889e-79addf6004dc">
+    <data-source source="LOCAL" name="Untitled.db [2]" uuid="a255d3b3-ba22-4416-a0f8-5cd81f932e58">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/tg_bot/models/Untitled.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/Untitled.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

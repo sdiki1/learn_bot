@@ -6,18 +6,11 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.fsm_storage.redis import RedisStorage2
 
 from tg_bot.handlers import register_start, register_profile_back, \
-    register_about_bot, register_new_or_old
+    register_about_bot, register_new_or_old, register_registration
 from tg_bot.config import load_config
 from tg_bot.filters.admin import AdminFilter
 from tg_bot.handlers.echo import register_echo
 from tg_bot.middlewares.db import DbMiddleware
-
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine
-
-engine = create_engine("sqlite:///Untitled.db")
-Session = sessionmaker()
-session = Session(bind=engine)
 
 
 
@@ -32,7 +25,7 @@ def register_all_filters(dp):
 def register_all_handlers(dp):
     register_start(dp)
     register_echo(dp)
-
+    register_registration(dp)
     register_profile_back(dp)
     register_about_bot(dp)
     register_new_or_old(dp)

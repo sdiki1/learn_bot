@@ -1,5 +1,7 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
+
+
 start = ReplyKeyboardMarkup(
 
     keyboard=[
@@ -66,5 +68,21 @@ upload_table = ReplyKeyboardMarkup(
             KeyboardButton(text="назад")
         ]
 
-    ]
+    ],
+    resize_keyboard=True
+)
+
+choose_male = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text="Мужчина")
+        ],
+        [
+            KeyboardButton(text="Женщина")
+        ],
+        [
+            KeyboardButton(text="Не указывать")
+        ]
+    ],
+    resize_keyboard=True
 )

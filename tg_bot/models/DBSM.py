@@ -2,6 +2,10 @@ import enum, sqlalchemy
 from sqlalchemy.orm import declarative_base, sessionmaker
 from sqlalchemy import String, Integer, Float, Column, Enum, create_engine, ForeignKey, DATETIME
 
+engine = create_engine("sqlite:////Users/vladimirbuharin/learning/programming/learn_bot/Untitled.db")
+Session = sessionmaker()
+session = Session(bind=engine)
+
 class male(enum.Enum):
     dont_know = 0
     male = 1

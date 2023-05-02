@@ -1,14 +1,22 @@
 import datetime
-
 from aiogram import types, Dispatcher
 from aiogram.dispatcher.filters import CommandStart, state
 from tg_bot.keyboards import start, only_back, start_now
-from tg_bot.states import Start
+from tg_bot.states import Start, Registration
+from tg_bot.models import Users, List, session
 
 
 async def start_hand(message: types.Message):
     await Start.Start_command.set()
-    await message.answer('Привет! Этот бот может помочь тебе изучать слова на иностранном языке!', reply_markup=start)
+    if(session.query(Users).filter(Users.tg_user_id == message.from_user.id).count() == 0):
+        print("User did't used bot yet")
+        await Registration.Q1.set()
+        await message.answer('Привет! Ты Первый раз пользуешься нашим Ботом! Этот бот может помочь тебе изучать слова на иностранном языке! Давай пройдём Регистрацию)')
+        await message.answer('Введите своё имя:')
+    else:
+        print(session.query(Users).filter(Users.tg_user_id == message.from_user.id).count())
+        await message.answer('Привет! Этот бот может помочь тебе изучать слова на иностранном языке!', reply_markup=start)
+
 
 
 
@@ -17,6 +25,8 @@ def register_start(dp: Dispatcher):
     dp.register_message_handler(start_hand, state=Start.Start_learning, text='назад')
     dp.register_message_handler(start_hand, state=Start.About_bot, text='назад')
     dp.register_message_handler(start_hand, state=Start.Profile, text='назад')
+    dp.register_message_handler(start_hand, commands='start', state=)
+
 
 
 async def profile(message: types.Message):
@@ -39,4 +49,5 @@ async def about_bot(message: types.Message):
 
 def register_about_bot(dp:Dispatcher):
     dp.register_message_handler(about_bot, state=Start.Start_command, text='О боте')
+
 
