@@ -21,11 +21,10 @@ async def start_hand(message: types.Message):
 
 
 def register_start(dp: Dispatcher):
-    dp.register_message_handler(start_hand, commands='start')
+    dp.register_message_handler(start_hand, commands='start', state="*")
     dp.register_message_handler(start_hand, state=Start.Start_learning, text='назад')
     dp.register_message_handler(start_hand, state=Start.About_bot, text='назад')
     dp.register_message_handler(start_hand, state=Start.Profile, text='назад')
-    dp.register_message_handler(start_hand, commands='start', state=)
 
 
 
