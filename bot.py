@@ -12,6 +12,15 @@ from tg_bot.filters.admin import AdminFilter
 from tg_bot.handlers.echo import register_echo
 from tg_bot.middlewares.db import DbMiddleware
 
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+
+engine = create_engine("sqlite:///Untitled.db")
+Session = sessionmaker()
+session = Session(bind=engine)
+
+
+
 logger = logging.getLogger(__name__)
 
 def register_all_middlewares(dp):

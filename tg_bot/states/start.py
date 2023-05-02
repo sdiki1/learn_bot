@@ -6,3 +6,11 @@ class Start(StatesGroup):
     Profile = State()
     About_bot = State()
     Start_learning = State()
+
+
+class Use_Old_List(StatesGroup):
+    ChooseList = State()
+
+
+class Create_New_List(StatesGroup):
+    Upload = State()

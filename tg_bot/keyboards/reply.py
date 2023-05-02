@@ -59,3 +59,12 @@ new_or_old_list = ReplyKeyboardMarkup(
     ],
     resize_keyboard=True
 )
+
+upload_table = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text="назад")
+        ]
+
+    ]
+)

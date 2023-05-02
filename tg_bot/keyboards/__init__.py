@@ -1,4 +1,1 @@
-from .reply import start
-from .reply import only_back
-from .reply import start_now
-from .reply import new_or_old_list
+from .reply import start, upload_table, only_back, start_now, new_or_old_list
