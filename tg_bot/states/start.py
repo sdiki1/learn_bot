@@ -14,6 +14,7 @@ class Use_Old_List(StatesGroup):
 
 class Create_New_List(StatesGroup):
     Upload = State()
+    Get_name = State()
     Download = State()
 
 class Registration(StatesGroup):
