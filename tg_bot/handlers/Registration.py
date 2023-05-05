@@ -34,9 +34,9 @@ async def start_hand(message: types.Message, state: FSMContext):
         if message.text == "Мужчина":
             data["male"] = male.male
         elif message.text == "Женщина":
-            data["male"] = 1
+            data["male"] = male.female
         else:
-            data["male"] = 2
+            data["male"] = male.dont_know
     data=await state.get_data()
     new_user = Users(name=f'{data["name"]}', tg_user_id=message.from_user.id, tg_user_chat_id=message.chat.id, age=data["age"], male=data["male"])
     session.add(new_user)

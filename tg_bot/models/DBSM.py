@@ -25,8 +25,11 @@ class Users(Base):
 
 
 class List(Base):
-    __tablename__ = "lists"
-    id_list = Column(Integer, primary_key=True, autoincrement=True)
+    __tablename__ = "words"
+    id = Column(Integer, primary_key=True, autoincrement=True)
     id_user = Column(Integer, ForeignKey("users.id"))
-    path_to_json = Column(String(255))
+    word = Column(String(255))
+    translate = Column(String(255))
+    name_sheet = Column(String(255))
 
+Base.metadata.create_all(engine)
