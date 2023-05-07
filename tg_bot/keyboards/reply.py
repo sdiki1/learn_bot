@@ -86,3 +86,13 @@ choose_male = ReplyKeyboardMarkup(
     ],
     resize_keyboard=True
 )
+
+back_new_or_old = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text="назад")
+        ]
+
+    ],
+    resize_keyboard=True
+)

@@ -2,6 +2,8 @@ import datetime
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import CommandStart, state
+from aiogram.types import ReplyKeyboardRemove
+
 from tg_bot.keyboards import start, choose_male
 from tg_bot.states import Start, Registration
 from tg_bot.models import Users, List, session, male
@@ -13,7 +15,7 @@ async def enter_age(message:types.message, state: FSMContext):
 
     async with state.proxy() as data:
         data["name"] = answer
-    await message.answer(f"Хорошо, {answer},\nТеперь введите свой возраст:", reply_markup=None)
+    await message.answer(f"Хорошо, {answer},\nТеперь введите свой возраст:", reply_markup=ReplyKeyboardRemove())
 
     await Registration.Q2.set()
 

@@ -8,8 +8,9 @@ class Start(StatesGroup):
     Start_learning = State()
 
 
-class Use_Old_List(StatesGroup):
+class Use_List(StatesGroup):
     ChooseList = State()
+
 
 
 class Create_New_List(StatesGroup):
