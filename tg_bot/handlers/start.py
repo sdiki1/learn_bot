@@ -2,7 +2,7 @@ import datetime
 from aiogram import types, Dispatcher
 from aiogram.dispatcher.filters import CommandStart, state
 from tg_bot.keyboards import start, only_back, start_now
-from tg_bot.states import Start, Registration
+from tg_bot.states import Start, Registration, state_Quiz
 from tg_bot.models import Users, List, session
 
 
@@ -25,7 +25,8 @@ def register_start(dp: Dispatcher):
     dp.register_message_handler(start_hand, state=Start.Start_learning, text='назад')
     dp.register_message_handler(start_hand, state=Start.About_bot, text='назад')
     dp.register_message_handler(start_hand, state=Start.Profile, text='назад')
-
+    dp.register_message_handler(start_hand, state=state_Quiz.quiz_done, text='назад')
+    dp.register_message_handler(start_hand, state=state_Quiz.quiz, text='назад')
 
 
 async def profile(message: types.Message):
@@ -36,7 +37,6 @@ async def profile(message: types.Message):
 
 
 def register_profile_back(dp: Dispatcher):
-
     dp.register_message_handler(profile, state=Start.Start_command, text='профиль')
 
 
