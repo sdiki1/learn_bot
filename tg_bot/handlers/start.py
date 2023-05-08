@@ -9,12 +9,10 @@ from tg_bot.models import Users, List, session
 async def start_hand(message: types.Message):
     await Start.Start_command.set()
     if(session.query(Users).filter(Users.tg_user_id == message.from_user.id).count() == 0):
-        print("User did't used bot yet")
         await Registration.Q1.set()
         await message.answer('Привет! Ты Первый раз пользуешься нашим Ботом! Этот бот может помочь тебе изучать слова на иностранном языке! Давай пройдём Регистрацию)')
         await message.answer('Введите своё имя:')
     else:
-        print(session.query(Users).filter(Users.tg_user_id == message.from_user.id).count())
         await message.answer('Привет! Этот бот может помочь тебе изучать слова на иностранном языке!', reply_markup=start)
 
 
@@ -22,22 +20,23 @@ async def start_hand(message: types.Message):
 
 def register_start(dp: Dispatcher):
     dp.register_message_handler(start_hand, commands='start', state="*")
-    dp.register_message_handler(start_hand, state=Start.Start_learning, text='назад')
-    dp.register_message_handler(start_hand, state=Start.About_bot, text='назад')
-    dp.register_message_handler(start_hand, state=Start.Profile, text='назад')
-    dp.register_message_handler(start_hand, state=state_Quiz.quiz_done, text='назад')
-    dp.register_message_handler(start_hand, state=state_Quiz.quiz, text='назад')
+    dp.register_message_handler(start_hand, state=Start.Start_learning, text='Назад')
+    dp.register_message_handler(start_hand, state=Start.About_bot, text='Назад')
+    dp.register_message_handler(start_hand, state=Start.Profile, text='Назад')
+    dp.register_message_handler(start_hand, state=state_Quiz.quiz_done, text='Назад')
+    dp.register_message_handler(start_hand, state=state_Quiz.quiz, text='Назад')
 
 
 async def profile(message: types.Message):
+    user = session.query(Users).filter(Users.tg_user_id == message.from_user.id).first()
     await Start.Profile.set()
-    await message.answer(f'ID юзера: {message.from_user.id},\nID чата: {message.chat.id},\nВремя сейчас: {datetime.datetime.now()}', reply_markup=only_back)
+    await message.answer(f'ID чата: {message.chat.id},\nВаше имя: {user.name}, \nВаш возраст: {user.age}, \nВремя сейчас: {datetime.datetime.now()}', reply_markup=only_back)
 
 #def register_profile(dp:Dispatcher):
 
 
 def register_profile_back(dp: Dispatcher):
-    dp.register_message_handler(profile, state=Start.Start_command, text='профиль')
+    dp.register_message_handler(profile, state=Start.Start_command, text='Профиль')
 
 
 
