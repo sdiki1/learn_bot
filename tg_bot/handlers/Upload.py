@@ -14,11 +14,11 @@ async def upload_to_base(path: str, id_user: int, name_table: str):
     workbook = xlrd.open_workbook(path)
     worksheet = workbook.sheet_by_index(0)
 
-    print(worksheet.cell(1, 1).value)    # cell(y, x).value
 
     user = session.query(Users).filter(Users.tg_user_id == id_user).first()
     for i in range(worksheet.nrows):
-
+        if(worksheet.cell(i, 0).value == '' or worksheet.cell(i, 1).value == ''):
+            continue
         new_list = List(id_user=user.id, word=worksheet.cell(i, 0).value, translate=worksheet.cell(i, 1).value, name_sheet=name_table)
         session.add(new_list)
         session.commit()
@@ -30,7 +30,7 @@ async def upload_to_base(path: str, id_user: int, name_table: str):
 
 async def start_hand(message: types.Message):
     await Create_New_List.Upload.set()
-    await message.answer('Отправь .xlsx файл с таблицей сюда)', reply_markup=upload_table)
+    await message.answer('Отправь .xls файл с таблицей сюда)', reply_markup=upload_table)
 
 
 async def save_file_getname(message: types.Message):
@@ -47,9 +47,12 @@ async def save_file_getname(message: types.Message):
 
 async def install_data(message: types.Message):
     await Create_New_List.Download.set()
+    try:
+        await upload_to_base(f"files/{message.from_user.id}/tmp.xsl", message.from_user.id, message.text)
+        await message.answer("Список успешно создан)")
+    except:
+        await message.answer("При создании списка произошла ошибка... попробуйте ещё раз")
 
-    await upload_to_base(f"files/{message.from_user.id}/tmp.xsl", message.from_user.id, message.text)
-    await message.answer("Я попытался загрузить файл, и у меня получилось")
 
 
 

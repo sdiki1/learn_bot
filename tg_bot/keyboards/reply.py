@@ -6,13 +6,13 @@ start = ReplyKeyboardMarkup(
 
     keyboard=[
         [
-            KeyboardButton(text='профиль')
+            KeyboardButton(text='Профиль')
         ],
         [
             KeyboardButton(text='О боте')
         ],
         [
-            KeyboardButton(text='🔝начать🔝')
+            KeyboardButton(text='🔝Начать🔝')
         ]
 
     ],
@@ -26,7 +26,7 @@ only_back = ReplyKeyboardMarkup(
 
     keyboard=[
         [
-            KeyboardButton(text='назад')
+            KeyboardButton(text='Назад')
         ]
     ],
 
@@ -36,10 +36,10 @@ only_back = ReplyKeyboardMarkup(
 start_now = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text="🔝начать сейчас🔝")
+            KeyboardButton(text="🔝Начать сейчас🔝")
         ],
         [
-            KeyboardButton(text='назад')
+            KeyboardButton(text='Назад')
         ]
     ],
 
@@ -56,7 +56,7 @@ new_or_old_list = ReplyKeyboardMarkup(
             KeyboardButton(text="Создать новый список слов")
         ],
         [
-            KeyboardButton(text="назад")
+            KeyboardButton(text="Назад")
         ]
     ],
     resize_keyboard=True
@@ -65,7 +65,7 @@ new_or_old_list = ReplyKeyboardMarkup(
 upload_table = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text="назад")
+            KeyboardButton(text="Назад")
         ]
 
     ],
@@ -90,7 +90,7 @@ choose_male = ReplyKeyboardMarkup(
 back_new_or_old = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text="назад")
+            KeyboardButton(text="Назад")
         ]
 
     ],
