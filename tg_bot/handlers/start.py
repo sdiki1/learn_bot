@@ -4,18 +4,20 @@ from aiogram.dispatcher.filters import CommandStart, state
 from tg_bot.keyboards import start, only_back, start_now
 from tg_bot.states import Start, Registration
 from tg_bot.models import Users, List, session
+import logging
 
-
+logger = logging.getLogger(__name__)
 async def start_hand(message: types.Message):
     await Start.Start_command.set()
     if(session.query(Users).filter(Users.tg_user_id == message.from_user.id).count() == 0):
-        print("User did't used bot yet")
+
         await Registration.Q1.set()
         await message.answer('Привет! Ты Первый раз пользуешься нашим Ботом! Этот бот может помочь тебе изучать слова на иностранном языке! Давай пройдём Регистрацию)')
         await message.answer('Введите своё имя:')
     else:
         print(session.query(Users).filter(Users.tg_user_id == message.from_user.id).count())
         await message.answer('Привет! Этот бот может помочь тебе изучать слова на иностранном языке!', reply_markup=start)
+        logger.info(f"user_id {session.query(Users).filter(Users.tg_user_id == message.from_user.id).first().id} -/start")
 
 
 

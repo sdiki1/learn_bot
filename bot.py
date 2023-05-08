@@ -4,7 +4,6 @@ import logging
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.fsm_storage.redis import RedisStorage2
-
 from tg_bot.handlers import register_start, register_profile_back, \
      register_about_bot, register_new_or_old, register_registration, \
      register_uploading_file
