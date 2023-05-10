@@ -7,7 +7,9 @@ from aiogram.types import ReplyKeyboardRemove
 from tg_bot.keyboards import start, choose_male
 from tg_bot.states import Start, Registration
 from tg_bot.models import Users, List, session, male
+import logging
 
+logger = logging.getLogger(__name__)
 
 
 async def enter_age(message:types.message, state: FSMContext):
@@ -16,7 +18,6 @@ async def enter_age(message:types.message, state: FSMContext):
     async with state.proxy() as data:
         data["name"] = answer
     await message.answer(f"Хорошо, {answer},\nТеперь введите свой возраст:", reply_markup=ReplyKeyboardRemove())
-
     await Registration.Q2.set()
 
 
@@ -43,6 +44,7 @@ async def start_hand(message: types.Message, state: FSMContext):
     new_user = Users(name=f'{data["name"]}', tg_user_id=message.from_user.id, tg_user_chat_id=message.chat.id, age=data["age"], male=data["male"])
     session.add(new_user)
     session.commit()
+    logger.info(f"registration done, user_id: {session.query(Users).filter(Users.tg_user_id == message.from_user.id).first().id}")
     await Start.Start_command.set()
     await message.answer('Привет! Этот бот может помочь тебе изучать слова на иностранном языке!', reply_markup=start)
 

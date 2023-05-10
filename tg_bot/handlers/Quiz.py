@@ -2,14 +2,19 @@
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import CommandStart, state
+from aiogram.types import KeyboardButton
+
 from tg_bot.keyboards import start, only_back, start_now, new_or_old_list,  back_new_or_old
 from tg_bot.states import Start, Create_New_List, Use_List, state_Quiz
 from tg_bot.models import Users, List, session, male
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 async def new_or_old(message: types.Message):
     await Start.Start_learning.set()
-    get_my_lists = 4 #we need to count, how many lists with words you have saved
+
     user = session.query(Users).filter(Users.tg_user_id == message.from_user.id).first()
     data = session.query(List).filter(List.id_user == user.id)
     name_shets = []
@@ -17,13 +22,15 @@ async def new_or_old(message: types.Message):
         if i.name_sheet not in name_shets:
             name_shets.append(i.name_sheet)
     get_my_lists = len(name_shets)
-    await message.answer(f'в данный момент у вас имеется {get_my_lists} списков слов, что вы хотите, использовать существующий список или создать новый?', reply_markup=new_or_old_list)
+    logger.info("User get choose: create new list, or use old list")
+    await message.answer(f'В данный момент у вас имеется {get_my_lists} списков слов, что вы хотите, использовать существующий список или создать новый?', reply_markup=new_or_old_list)
 
 def register_new_or_old(dp: Dispatcher):
-    dp.register_message_handler(new_or_old, state=Use_List.ChooseList, text="назад")
-    dp.register_message_handler(new_or_old, state=Create_New_List.Upload, text="назад")
-    dp.register_message_handler(new_or_old, state=Start.Start_command, text='🔝начать🔝')
-    dp.register_message_handler(new_or_old, state=Start.About_bot, text='🔝начать сейчас🔝')
+    dp.register_message_handler(new_or_old, state=Create_New_List.Download, text="Назад")
+    dp.register_message_handler(new_or_old, state=Use_List.ChooseList, text="Назад")
+    dp.register_message_handler(new_or_old, state=Create_New_List.Upload, text="Назад")
+    dp.register_message_handler(new_or_old, state=Start.Start_command, text='🔝Начать🔝')
+    dp.register_message_handler(new_or_old, state=Start.About_bot, text='🔝Начать сейчас🔝')
 
 
 
@@ -31,25 +38,27 @@ async def choose_list(message: types.Message):
     await Use_List.ChooseList.set()
     user = session.query(Users).filter(Users.tg_user_id == message.from_user.id).first()
     data = session.query(List).filter(List.id_user == user.id)
-    name_shets = []
+    name_sheets = []
     for i in data:
-        if i.name_sheet not in name_shets:
-            name_shets.append(i.name_sheet)
+        if i.name_sheet not in name_sheets:
+            name_sheets.append(i.name_sheet)
     keyboard = types.InlineKeyboardMarkup(row_width=1)
-    for i in name_shets:
+    for i in name_sheets:
         keyboard.add(types.InlineKeyboardButton(text=f"{i}", callback_data=f"{i}"))
-
-
+    logger.info(f"user have choose, what of {len(name_sheets)} lists user will use")
+    await message.answer(f"У вас имеется {len(name_sheets)} списков слов!", reply_markup=only_back)
     await message.answer('Выберите пожалуйста лист, который вы хотели бы начать изучать сейчас):', reply_markup=keyboard)
+
+
 
 async def callback(call: types.CallbackQuery, state = FSMContext):
     await state_Quiz.quiz.set()
     await call.message.answer(f'Вы решили изучать список под названием: {call.data}', reply_markup=only_back)
     await call.message.answer(f'Суть нашего изучения: мы вам даем слово на русском языке, вы вводите его перевод)', reply_markup=only_back)
     user = session.query(Users).filter(Users.tg_user_id == call.message.from_user.id).first()
-    data1 = session.query(List).filter(List.id_user == 1)
+    data1 = session .query(List).filter(List.id_user == user.id)
     datal = data1.filter(List.name_sheet == call.data).all()
-
+    logger.info(f"user user_id:{user.id} started learning list with name: {call.data}")
     async with state.proxy() as data:
         data["current"] = 0
         data["words_all"] = datal
