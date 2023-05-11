@@ -8,5 +8,7 @@ from tg_bot.states import EditProfile
 from tg_bot.models import Users, List, session, male
 import logging
 
-
+async def edit_profile(message:types.message, state: FSMContext):
+    await EditProfile.E1.set()
+    await message.answer("LOL")
 
