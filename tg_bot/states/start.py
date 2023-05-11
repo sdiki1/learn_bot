@@ -8,6 +8,8 @@ class Start(StatesGroup):
     Start_learning = State()
 
 
+
+
 class Use_List(StatesGroup):
     ChooseList = State()
 
@@ -22,3 +24,8 @@ class Registration(StatesGroup):
     Q1 = State()
     Q2 = State()
     Q3 = State()
+
+class EditProfile(StatesGroup):
+    E1 = State()
+    E2 = State()
+    E3 = State()
